@@ -13,7 +13,7 @@ class GroqClient:
         try:
             client = Groq(api_key=self.api_key)
             response = client.chat.completions.create(
-                model="llama-3.3-70b-versatile",  # <--- Modelo estable y universal en Groq
+                model="llama3-8b-8192",  # <--- Modelo estándar y universal garantizado en Groq
                 messages=[
                     {"role": "system", "content": prompt_sistema},
                     {"role": "user", "content": prompt_usuario}

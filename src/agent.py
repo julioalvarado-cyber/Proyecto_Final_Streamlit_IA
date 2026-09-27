@@ -1,20 +1,34 @@
 import os
+try:
+    import streamlit as st
+except ImportError:
+    st = None
+
 from src.llm_client import GroqClient
 
 class AgenteDatos:
-    """Clase para la gestión del agente analítico con inyección de contexto."""
+    """Clase para la gestión del agente analítico conectado a Google Gemini."""
     
-    def __init__(self, model_name: str = "llama-3.2-3b-preview"):
+    def __init__(self, model_name: str = "gemini-1.5-flash"):
         self.model_name = model_name
         self.client = GroqClient()
 
     def esta_disponible(self) -> bool:
-        """Verifica si la API Key de Groq está presente para habilitar el agente."""
-        api_key = os.getenv("GROQ_API_KEY")
+        """Verifica si la GEMINI_API_KEY está presente en Secrets o entorno para habilitar el agente."""
+        api_key = None
+        try:
+            if st and hasattr(st, "secrets") and "GEMINI_API_KEY" in st.secrets:
+                api_key = st.secrets["GEMINI_API_KEY"]
+        except Exception:
+            pass
+            
+        if not api_key:
+            api_key = os.getenv("GEMINI_API_KEY")
+            
         return bool(api_key and api_key.strip())
 
     def consultar(self, prompt_sistema: str, prompt_usuario: str) -> str:
-        """Envía los prompts al cliente LLM de Groq."""
+        """Envía los prompts al cliente LLM."""
         return self.client.consultar(prompt_sistema, prompt_usuario)
 
     def responder(self, prompt_sistema: str, prompt_usuario: str) -> str:

@@ -4,43 +4,39 @@ try:
 except ImportError:
     st = None
 
-from groq import Groq
+import google.generativeai as genai
 
 class GroqClient:
-    """Cliente seguro para la API de Groq."""
+    """Cliente configurado con Google Gemini para Streamlit Cloud."""
     def __init__(self):
         self.api_key = None
         
-        # Leer la API Key de los Secrets de Streamlit Cloud
+        # 1. Intentar leer desde los Secrets de Streamlit Cloud
         try:
-            if st and hasattr(st, "secrets") and "GROQ_API_KEY" in st.secrets:
-                self.api_key = st.secrets["GROQ_API_KEY"]
+            if st and hasattr(st, "secrets") and "GEMINI_API_KEY" in st.secrets:
+                self.api_key = st.secrets["GEMINI_API_KEY"]
         except Exception:
             pass
             
-        # Respaldo por variable de entorno local
+        # 2. Respaldo por variable de entorno local
         if not self.api_key:
-            self.api_key = os.getenv("GROQ_API_KEY")
+            self.api_key = os.getenv("GEMINI_API_KEY")
 
     def consultar(self, prompt_sistema: str, prompt_usuario: str) -> str:
         if not self.api_key:
-            return "⚠️ Error: No se encontró la API Key de Groq en los Secrets."
+            return "⚠️ Error: No se encontró la GEMINI_API_KEY en los Secrets de Streamlit Cloud."
 
         try:
-            client = Groq(api_key=str(self.api_key).strip())
-            
-            response = client.chat.completions.create(
-                model="llama3-8b-8192",  # <--- Modelo clásico y ultra compatible con cualquier cuenta de Groq
-                messages=[
-                    {"role": "system", "content": prompt_sistema},
-                    {"role": "user", "content": prompt_usuario}
-                ],
-                temperature=0.2,
-                max_tokens=1024
+            genai.configure(api_key=self.api_key.strip())
+            # Usando el modelo eficiente seleccionado
+            model = genai.GenerativeModel(
+                model_name="gemini-3.1-flash-lite",
+                system_instruction=prompt_sistema
             )
-            return response.choices[0].message.content
+            response = model.generate_content(prompt_usuario)
+            return response.text
         except Exception as e:
-            return f"⚠️ Error al conectar con Groq: {str(e)}"
+            return f"⚠️ Error al conectar con Google Gemini: {str(e)}"
 
-# Alias de compatibilidad
+# Alias de compatibilidad para el resto de la aplicación modular
 OllamaClient = GroqClient

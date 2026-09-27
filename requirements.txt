@@ -4,4 +4,4 @@ plotly
 ollama
 statsmodels
 openpyxl
-
+groq

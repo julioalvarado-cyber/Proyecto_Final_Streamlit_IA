@@ -1,24 +1,25 @@
-import ollama
+import os
+from groq import Groq
 
-class OllamaClient:
-    """Cliente para la comunicación local con el servidor de Ollama."""
-    def __init__(self, model_name: str = "llama3.2"):
-        self.model_name = model_name
+def consultar_llm(prompt_sistema, prompt_usuario):
+    # Lee la API Key desde los Secrets de Streamlit Cloud o variables de entorno
+    api_key = os.getenv("GROQ_API_KEY")
+    
+    if not api_key:
+        return "⚠️ Error: No se encontró la API Key de Groq configurada en la aplicación."
 
-    def verificar_conexion(self) -> bool:
-        """Comprueba si el servicio local de Ollama está activo."""
-        try:
-            ollama.list()
-            return True
-        except Exception:
-            return False
+    try:
+        client = Groq(api_key=api_key)
 
-    def consultar(self, prompt: str, system_prompt: str = "") -> str:
-        """Envia una consulta al modelo local y retorna su respuesta."""
-        mensajes = []
-        if system_prompt:
-            mensajes.append({"role": "system", "content": system_prompt})
-        mensajes.append({"role": "user", "content": prompt})
-
-        respuesta = ollama.chat(model=self.model_name, messages=mensajes)
-        return respuesta['message']['content']
+        response = client.chat.completions.create(
+            model="llama-3.2-3b-preview",
+            messages=[
+                {"role": "system", "content": prompt_sistema},
+                {"role": "user", "content": prompt_usuario}
+            ],
+            temperature=0.2,
+            max_tokens=1024
+        )
+        return response.choices[0].message.content
+    except Exception as e:
+        return f"⚠️ Error al conectar con el servicio de IA: {str(e)}"

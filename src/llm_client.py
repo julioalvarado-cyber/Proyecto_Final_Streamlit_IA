@@ -7,29 +7,29 @@ except ImportError:
 from groq import Groq
 
 class GroqClient:
-    """Cliente robusto para interactuar con la API de Groq en Streamlit Cloud y local."""
+    """Cliente para interactuar con la API de Groq."""
     def __init__(self):
         self.api_key = None
         
-        # 1. Intentar leer desde los Secrets de Streamlit Cloud
+        # Leer desde los Secrets de Streamlit Cloud
         try:
             if st and hasattr(st, "secrets") and "GROQ_API_KEY" in st.secrets:
                 self.api_key = st.secrets["GROQ_API_KEY"]
         except Exception:
             pass
             
-        # 2. Si no está en secrets, intentar con variable de entorno
+        # Respaldo con variable de entorno
         if not self.api_key:
             self.api_key = os.getenv("GROQ_API_KEY")
 
     def consultar(self, prompt_sistema: str, prompt_usuario: str) -> str:
         if not self.api_key:
-            return "⚠️ Error: No se encontró la API Key de Groq configurada en los Secrets de Streamlit Cloud."
+            return "⚠️ Error: No se encontró la API Key de Groq en los Secrets."
 
         try:
             client = Groq(api_key=self.api_key.strip())
             response = client.chat.completions.create(
-                model="llama-3.1-8b-instant",  # Modelo estándar optimizado y activo
+                model="llama-3.3-70b-versatile",  # <--- Usaremos este modelo ultra estable y oficial
                 messages=[
                     {"role": "system", "content": prompt_sistema},
                     {"role": "user", "content": prompt_usuario}
@@ -41,5 +41,5 @@ class GroqClient:
         except Exception as e:
             return f"⚠️ Error al conectar con el servicio de Groq: {str(e)}"
 
-# Alias por compatibilidad modular
+# Alias por compatibilidad
 OllamaClient = GroqClient

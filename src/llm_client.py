@@ -28,9 +28,9 @@ class GroqClient:
 
         try:
             genai.configure(api_key=self.api_key.strip())
-            # Usando el modelo eficiente seleccionado
+            # Usamos un modelo estándar y 100% compatible en la API gratuita
             model = genai.GenerativeModel(
-                model_name="gemini-3.1-flash-lite",
+                model_name="gemini-1.5-flash",
                 system_instruction=prompt_sistema
             )
             response = model.generate_content(prompt_usuario)
@@ -38,5 +38,5 @@ class GroqClient:
         except Exception as e:
             return f"⚠️ Error al conectar con Google Gemini: {str(e)}"
 
-# Alias de compatibilidad para el resto de la aplicación modular
+# Alias de compatibilidad estricta para que cualquier módulo que busque Ollama use Gemini
 OllamaClient = GroqClient

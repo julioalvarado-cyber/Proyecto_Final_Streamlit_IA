@@ -13,13 +13,13 @@ class GroqClient:
         try:
             client = Groq(api_key=self.api_key)
             response = client.chat.completions.create(
-                model="deepseek-r1-distill-llama-70b",  # <--- Modelo estable y activo en Groq
+                model="llama-3.3-70b-versatile",  # <--- Modelo estable y activo actualmente en Groq
                 messages=[
                     {"role": "system", "content": prompt_sistema},
                     {"role": "user", "content": prompt_usuario}
                 ],
-                temperature=0.6,
-                max_tokens=2048
+                temperature=0.2,
+                max_tokens=1024
             )
             return response.choices[0].message.content
         except Exception as e:

@@ -7,7 +7,7 @@ except ImportError:
 from groq import Groq
 
 class GroqClient:
-    """Cliente seguro y directo para la API de Groq."""
+    """Cliente seguro para la API de Groq."""
     def __init__(self):
         self.api_key = None
         
@@ -27,11 +27,10 @@ class GroqClient:
             return "⚠️ Error: No se encontró la API Key de Groq en los Secrets."
 
         try:
-            # Inicializar cliente de Groq de forma limpia
             client = Groq(api_key=str(self.api_key).strip())
             
             response = client.chat.completions.create(
-                model="llama-3.1-8b-instant",  # Modelo estable y garantizado en Groq
+                model="llama3-8b-8192",  # <--- Modelo clásico y ultra compatible con cualquier cuenta de Groq
                 messages=[
                     {"role": "system", "content": prompt_sistema},
                     {"role": "user", "content": prompt_usuario}

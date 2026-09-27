@@ -4,3 +4,4 @@ plotly
 ollama
 statsmodels
 openpyxl
+openai

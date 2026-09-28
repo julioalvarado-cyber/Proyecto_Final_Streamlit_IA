@@ -93,8 +93,10 @@ Para que el agente de Gemini funcione de forma local, crea una carpeta llamada `
 ```bash
 # Mac/Linux:
 mkdir .streamlit
+touch .streamlit/secrets.toml
 
 # Windows (PowerShell):
+mkdir .streamlit
 New-Item .streamlit/secrets.toml
 ```
 

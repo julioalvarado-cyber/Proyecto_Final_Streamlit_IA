@@ -96,9 +96,11 @@ GEMINI_API_KEY = "tu_clave_de_api_aqui"
 También puedes configurarla como una variable de entorno en tu terminal:
 
 ```bash
-# Mac/Linux: export GEMINI_API_KEY="tu_clave_de_api_aqui"
+# Mac/Linux:
+export GEMINI_API_KEY="tu_clave_de_api_aqui"
 
-# Windows (PowerShell): $env:GEMINI_API_KEY="tu_clave_de_api_aqui"
+# Windows (PowerShell):
+$env:GEMINI_API_KEY="tu_clave_de_api_aqui"
 ```
 ---
 

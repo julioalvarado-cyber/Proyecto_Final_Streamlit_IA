@@ -90,6 +90,16 @@ pip install -r requirements.txt
 ### 3. Configuración de Credenciales Locales
 Para que el agente de Gemini funcione de forma local, crea una carpeta llamada `.streamlit` en la raíz del proyecto y dentro un archivo llamado `secrets.toml`:
 
+```bash
+# Mac/Linux:
+mkdir .streamlit
+
+# Windows (PowerShell):
+New-Item .streamlit/secrets.toml
+```
+
+
+Dentro un archivo llamado `secrets.toml` coloca:
 ```Ini, TOML
 GEMINI_API_KEY = "tu_clave_de_api_aqui"
 ```

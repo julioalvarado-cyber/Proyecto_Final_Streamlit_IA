@@ -50,7 +50,7 @@ def main():
     st.sidebar.title("Navegación 🧭")
     opcion = st.sidebar.radio(
         "Seleccione un módulo:",
-        ["Carga y Vista Previa", "Análisis Exploratorio (EDA)", "Visualizaciones", "Agente de IA (Gemini)"]
+        ["Carga y Vista Previa", "Análisis Exploratorio (EDA)", "Visualizaciones", "Agente de IA (Ollama)"]
     )
 
     if not datos_cargados:
@@ -139,7 +139,7 @@ def main():
     # MÓDULO 4: AGENTE DE IA (OLLAMA LOCAL)
     # -------------------------------------------------------------------------
     elif opcion == "Agente de IA (Ollama)":
-        st.subheader("🤖 Asistente Virtual [Gemini 3.1 Flash Lite ]")
+        st.subheader("🤖 Asistente Virtual Local (Llama 3.2)")
         st.markdown(
             "Consulte en lenguaje natural sobre las métricas, patrones y hallazgos del conjunto de datos cargado."
         )

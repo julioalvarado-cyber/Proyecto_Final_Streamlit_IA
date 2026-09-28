@@ -11,7 +11,7 @@
 
 ## 📊 Proyecto Explorador Modular de Datos & Agente de IA Local
 
-Este proyecto es una plataforma interactiva desarrollada en **Streamlit** para la carga dinámica de conjuntos de datos, análisis exploratorio (EDA), visualización interactiva con **Plotly** e interpretación inteligente mediante un agente de **IA local (Ollama - Llama 3.2)**.
+Este proyecto es una plataforma interactiva desarrollada en **Streamlit** para la carga dinámica de conjuntos de datos, análisis exploratorio (EDA), visualización interactiva con **Plotly** e interpretación inteligente mediante un agente de **Inteligencia Artificial basado en Google Gemini**.
 
 ---
 

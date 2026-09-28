@@ -18,7 +18,7 @@ st.set_page_config(
 )
 
 def main():
-    st.title("📊 Explorador Modular de Datos & IA Local")
+    st.title("📊 Explorador Modular de Datos & Google Gemini AI")
     st.markdown("---")
 
     # Panel Lateral: Carga de Datos y Configuración
@@ -50,7 +50,7 @@ def main():
     st.sidebar.title("Navegación 🧭")
     opcion = st.sidebar.radio(
         "Seleccione un módulo:",
-        ["Carga y Vista Previa", "Análisis Exploratorio (EDA)", "Visualizaciones", "Agente de IA (Ollama)"]
+        ["Carga y Vista Previa", "Análisis Exploratorio (EDA)", "Visualizaciones", "Agente de IA (Gemini)"]
     )
 
     if not datos_cargados:
@@ -136,25 +136,24 @@ def main():
                 st.info("Se requiere al menos una variable categórica y una numérica en el dataset.")
 
     # -------------------------------------------------------------------------
-    # MÓDULO 4: AGENTE DE IA (OLLAMA LOCAL)
+    # MÓDULO 4: AGENTE DE IA (GOOGLE GEMINI)
     # -------------------------------------------------------------------------
-    elif opcion == "Agente de IA (Ollama)":
-        st.subheader("🤖 Asistente Virtual Local (Llama 3.2)")
+    elif opcion == "Agente de IA (Gemini)":
+        st.subheader("🤖 Asistente Virtual Inteligente (Google Gemini)")
         st.markdown(
             "Consulte en lenguaje natural sobre las métricas, patrones y hallazgos del conjunto de datos cargado."
         )
 
-        agente = AgenteDatos(model_name="llama3.2")
+        agente = AgenteDatos(model_name="gemini-3.1-flash-lite")
 
-        # Comprobar el estado del servicio Ollama en Mac
+        # Comprobar el estado de las credenciales de Gemini
         if not agente.esta_disponible():
-            st.error("⚠️ No se pudo conectar con el servicio local de Ollama.")
+            st.error("⚠️ No se encontró la GEMINI_API_KEY en los Secrets de Streamlit Cloud.")
             st.info(
-                "Asegúrese de tener Ollama ejecutándose en su Mac y el modelo descargado. "
-                "Comando sugerido en terminal: `ollama run llama3.2`"
+                "Asegúrese de configurar correctamente su clave de API de Google Gemini en el panel de configuración de Streamlit Cloud."
             )
         else:
-            st.success("🟢 Servicio Ollama conectado exitosamente (Modelo: Llama 3.2).")
+            st.success("🟢 Servicio de Google Gemini conectado exitosamente.")
 
             pregunta = st.text_input(
                 "Escriba su consulta sobre los datos:",

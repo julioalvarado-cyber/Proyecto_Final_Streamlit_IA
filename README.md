@@ -2,7 +2,6 @@
 ## Maestría en Inteligencia Artificial y Ciencia de Datos
 ### Proyecto Final Integrador
 
-* **Institución:** Universidad Casa Grande
 * **Módulo:** Paradigmas de Programación para Inteligencia Artificial y Ciencia de Datos
 * **Profesor:** Ing. Carlos Carillo, Mgs.
 * **Estudiante:** Ing. Julio Alvarado, Mgs.
@@ -18,10 +17,10 @@ Este proyecto es una plataforma interactiva desarrollada en **Streamlit** para l
 
 ## 🛠️ Características Principales
 
-- **Carga Dinámica de Datos Híbrida:** Soporte nativo para archivos `.csv` y hojas de cálculo de Excel (`.xlsx`, `.xls`), con sanitización automática de registros (eliminación de espacios extra, duplicados y nulos).
-- **Análisis Exploratorio de Datos (EDA):** Perfilado automático de calidad de datos y cálculo de estadísticas descriptivas.
+- **Carga Dinámica de Datos Híbrida:** Soporte nativo para archivos `.csv` y hojas de cálculo de Excel (`.xlsx`, `.xls`), con sanitización automática de registros.
+- **Análisis Exploratorio de Datos (EDA):** Perfilado automático de calidad de datos y cálculo de estadísticas descriptivas detalladas.
 - **Visualización Interactiva:** Generación de histogramas, diagramas de dispersión con líneas de tendencia OLS y gráficos de caja (Boxplots) mediante Plotly.
-- **Agente de IA Local:** Conexión con Ollama (Llama 3.2) alimentada por motores estadísticos en Python (matrices de correlación de Pearson y resúmenes por grupos categóricos) para garantizar respuestas cuantitativamente exactas y sin alucinaciones numéricas.
+- **Agente de IA en la Nube:** Conectado mediante la API de Google Gemini (`gemini-3.1-flash-lite`), alimentado por motores estadísticos en Python para garantizar respuestas cuantitativamente exactas y fundamentadas en los datos.
 
 ---
 
@@ -39,7 +38,7 @@ PROYECTO_INTEGRADOR/
 │   ├── data_loader.py          # Carga dinámica y sanitización de CSV/Excel
 │   ├── eda.py                  # Perfil de calidad y descriptivos
 │   ├── visualizations.py       # Gráficos interactivos Plotly
-│   ├── llm_client.py           # Cliente para servicio local de Ollama
+│   ├── llm_client.py           # Cliente robusto para Google Gemini
 │   └── agent.py                # Agente analítico con System Prompt blindado
 ├── app.py                      # Interfaz principal de Streamlit
 ├── requirements.txt            # Dependencias del proyecto
@@ -51,7 +50,7 @@ PROYECTO_INTEGRADOR/
 
 ### 1. Requisitos Previos
 - **Python 3.10** o superior.
-- [Ollama](https://ollama.com/) instalado en el sistema.
+- Una clave de API de Google Gemini (GEMINI_API_KEY) obtenida desde Google AI Studio [https://aistudio.google.com/].
 
 ---
 
@@ -88,10 +87,18 @@ python -m venv .venv
 pip install -r requirements.txt
 ```
 ---
-### 3. Iniciar el Servicio de IA (Ollama)
-En una ventana de terminal independiente, inicia el modelo:
+### 3. Configuración de Credenciales Locales
+Para que el agente de Gemini funcione de forma local, crea una carpeta llamada `.streamlit` en la raíz del proyecto y dentro un archivo llamado `secrets.toml`:
+
+```Ini, TOML
+GEMINI_API_KEY = "tu_clave_de_api_aqui"
+```
+También puedes configurarla como una variable de entorno en tu terminal:
+
 ```bash
-ollama run llama3.2
+# Mac/Linux: export GEMINI_API_KEY="tu_clave_de_api_aqui"
+
+# Windows (PowerShell): $env:GEMINI_API_KEY="tu_clave_de_api_aqui"
 ```
 ---
 
